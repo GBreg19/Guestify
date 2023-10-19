@@ -15,6 +15,7 @@ interface UsersState {
   usersData: UsersObject[];
   loading: boolean;
   error: string | null;
+  isGuestProfileOpened: boolean;
   deleting: boolean;
   editing: boolean;
   adding: boolean;
@@ -26,6 +27,7 @@ const initialState: UsersState = {
   usersData: [],
   loading: false,
   error: null,
+  isGuestProfileOpened: false,
   deleting: false,
   editing: false,
   adding: false,
@@ -92,6 +94,9 @@ export const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
+    isOpened: (state, action) => {
+      state.isGuestProfileOpened = action.payload
+    },
     isDeleting: (state, action) => {
       state.deleting = action.payload;
     },
@@ -162,6 +167,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { isDeleting, isEditing, isAdding } = usersSlice.actions;
+export const { isDeleting, isEditing, isAdding, isOpened } = usersSlice.actions;
 
 export default usersSlice.reducer;

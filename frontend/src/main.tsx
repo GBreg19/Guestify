@@ -4,28 +4,19 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./routes/error-page.tsx";
 import UsersTable from "./routes/users-table.tsx";
-import PersonalPage from "./routes/personal-page.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import Layout from "./layout/layout.tsx";
 
 const router = createBrowserRouter([
   {
-    path: "/users-task/",
+    path: "/",
     element: (
       <Layout>
         <UsersTable />
       </Layout>
     ),
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "users-task/user/:userId",
-    element: (
-      <Layout>
-        <PersonalPage />
-      </Layout>
-    ),
   },
 ]);
 

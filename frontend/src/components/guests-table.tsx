@@ -1,11 +1,10 @@
 import {
   UsersObject,
-  fetchUsers,
   isAdding,
   isDeleting,
   isEditing,
+  isOpened,
 } from "@/store/users-slice";
-import { Link } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -14,6 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { CiSquarePlus } from "react-icons/ci";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,9 +32,8 @@ import { useState } from "react";
 
 const GuestsTable = () => {
   const [selectedUser, setSelectedUser] = useState<UsersObject | null>(null);
-  const { usersData, deleting, editing, adding } = useAppSelector(
-    (state) => state.users
-  );
+  const { usersData, deleting, editing, adding, isGuestProfileOpened } =
+    useAppSelector((state) => state.users);
 
   const dispatch = useAppDispatch();
 
@@ -68,13 +67,13 @@ const GuestsTable = () => {
             <TableHead>City</TableHead>
             <TableHead className="flex items-center justify-end">
               <div>
-                <Button
+                <button
                   onClick={() => dispatch(isAdding(true))}
-                  className="mb-2 bg-slate-100 hover:bg-slate-200 text-black"
+                  className="text-3xl text-black hover:text-gray-600 mr-2 "
+                  title="Add new guest"
                 >
-                  Add User
-                </Button>
-                <div>{adding && <Modal adding />}</div>
+                  <CiSquarePlus />
+                </button>
               </div>
             </TableHead>
           </TableRow>
@@ -83,13 +82,19 @@ const GuestsTable = () => {
           {displayedUsers.map((user) => {
             return (
               <TableRow key={user._id} className="font-Noto-Reg">
-                <TableCell
-                  className="font-medium"
-                  title={`Click to open ${
-                    user.name.split(" ")[0]
-                  }'s personal page`}
-                >
-                  <Link to={`user/${user._id}`}>{user.name}</Link>
+                <TableCell>
+                  <span
+                    title={`Click to open ${
+                      user.name.split(" ")[0]
+                    }'s personal window`}
+                    className="cursor-pointer"
+                    onClick={() => {
+                      dispatch(isOpened(true));
+                      setSelectedUser(user);
+                    }}
+                  >
+                    {user.name}
+                  </span>
                 </TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.address.city}</TableCell>
@@ -145,7 +150,9 @@ const GuestsTable = () => {
           Next
         </Button>
       </div>
-      {(deleting || editing) && <Modal selectedUser={selectedUser} />}
+      {(deleting || editing || adding || isGuestProfileOpened) && (
+        <Modal selectedUser={selectedUser} />
+      )}
     </>
   );
 };

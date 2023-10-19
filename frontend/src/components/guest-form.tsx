@@ -82,8 +82,8 @@ function UserForm({ user }: FormProps) {
           city: values.city,
         },
       };
-      dispatch(fetchUsers({actionType: 'POST', newUser}))
-      dispatch(isAdding(false))
+      dispatch(fetchUsers({ actionType: "POST", newUser }));
+      dispatch(isAdding(false));
     }
   }
 
@@ -94,7 +94,14 @@ function UserForm({ user }: FormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-6">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 p-6 font-Noto-Reg text-white"
+      >
+        <h1 className="text-center text-2xl font-Noto-SemiB text-white">
+          {user && "Edit Guest Details"}
+          {!user && "Add New Guest"}
+        </h1>
         <FormField
           control={form.control}
           name="name"

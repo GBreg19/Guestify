@@ -1,12 +1,4 @@
-import { UsersObject, isEditing } from "@/store/users-slice";
-
-import {
-  FaFacebook,
-  FaSquareTwitter,
-  FaLinkedin,
-  FaSquareInstagram,
-} from "react-icons/fa6";
-import { Button } from "@/components/ui/button";
+import { UsersObject, isEditing, isOpened } from "@/store/users-slice";
 import {
   Card,
   CardContent,
@@ -15,96 +7,56 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CiEdit } from "react-icons/ci";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppDispatch } from "@/store/hooks";
-import { Link, useNavigate } from "react-router-dom";
+import Social from "./social";
+import { Button } from "./ui/button";
 
 interface CardProps {
   user?: UsersObject | null;
-  modal?: boolean;
-  setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserCard = ({ user, modal, setIsEditing = () => {} }: CardProps) => {
+const GuestCard = ({ user }: CardProps) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const onUserDetailsClose = () => {
-    if (modal) {
-      dispatch(isEditing(false));
-    } else {
-      navigate("/users-task/");
-    }
-  };
 
   return (
     user && (
-      <Card className="w-full max-w-lg bg-blue-300">
-        <CardHeader className="text-center">
-          <CardTitle>{user.name}</CardTitle>
-          <CardContent className="text-sm text-slate-500">
+      <Card className="max-w-xl flex gap-5 shadow-md shadow-slate-400 p-4">
+        <CardHeader>
+          <Avatar className="m-auto w-44 h-44 rounded-md">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </CardHeader>
+        <CardFooter className="p-0 flex flex-col items-start justify-between">
+          <CardTitle className="text-2xl font-Noto-Bold">{user.name}</CardTitle>
+          <CardContent className="text-sm text-slate-600 font-Noto-LightIta p-0">
             {user.email}
           </CardContent>
-          <CardDescription>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-            pariatur maxime iure sapiente cupiditate quis, consequuntur
-            voluptatibus molestiae numquam rerum praesentium corporis
-            dignissimos debitis, aliquam quam deserunt ex fugit harum!
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center">
-          <p>
-            Address: {user.address.city} ({user.address.street})
-          </p>
-        </CardContent>
-        <CardContent className="flex justify-center gap-5">
-          <Link
-            to={`https://www.facebook.com/`}
-            target="_"
-            className="text-3xl text-blue-500 hover:text-blue-400 cursor-pointer"
-          >
-            <FaFacebook />
-          </Link>
-          <Link
-            to={`https://twitter.com/home`}
-            target="_"
-            className="text-3xl text-blue-300 hover:text-blue-200 cursor-pointer"
-          >
-            <FaSquareTwitter />
-          </Link>
-          <Link
-            to={`https://www.linkedin.com/feed/`}
-            target="_"
-            className="text-3xl text-blue-600 hover:text-blue-500 cursor-pointer"
-          >
-            <FaLinkedin />
-          </Link>
-          <Link
-            to={`https://www.instagram.com/`}
-            target="_"
-            className="text-3xl text-red-600 hover:text-red-500 cursor-pointer"
-          >
-            <FaSquareInstagram />
-          </Link>
-        </CardContent>
-        <CardFooter className="flex gap-2 justify-center">
-          <Button
-            onClick={onUserDetailsClose}
-            className="bg-cyan-950 hover:bg-cyan-800"
-          >
-            Back
-          </Button>
-          {modal && (
+          <CardContent className="text-center p-0">
+            <p>
+              Address: {user.address.city} ({user.address.street})
+            </p>
+          </CardContent>
+          <CardContent className="p-0 flex gap-3">
             <Button
-              onClick={() => setIsEditing(true)}
-              className="bg-cyan-950 hover:bg-cyan-800"
+              onClick={() => {
+                dispatch(isEditing(true));
+                dispatch(isOpened(false));
+              }}
+              className="px-10 bg-inherit border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white"
             >
               Edit
             </Button>
-          )}
+            <Button className="px-10 bg-inherit border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white">
+              Delete
+            </Button>
+          </CardContent>
         </CardFooter>
       </Card>
     )
   );
 };
 
-export default UserCard;
+export default GuestCard;
