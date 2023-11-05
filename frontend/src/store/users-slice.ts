@@ -50,13 +50,8 @@ export const fetchUsers = createAsyncThunk<
     let resp;
     switch (actionType) {
       case "GET":
-        if (id) {
-          resp = await axios.get<UsersObject>(`${apiUrl}/${id}`);
-          return [resp.data];
-        } else {
-          resp = await axios.get<UsersObject[]>(apiUrl);
-          return resp.data;
-        }
+        resp = await axios.get<UsersObject[]>(apiUrl);
+        return resp.data;
       case "POST":
         if (newUser) {
           resp = await axios.post<UsersObject>(apiUrl, newUser);
@@ -95,7 +90,7 @@ export const usersSlice = createSlice({
   initialState,
   reducers: {
     isOpened: (state, action) => {
-      state.isGuestProfileOpened = action.payload
+      state.isGuestProfileOpened = action.payload;
     },
     isDeleting: (state, action) => {
       state.deleting = action.payload;
@@ -123,12 +118,12 @@ export const usersSlice = createSlice({
         state.loading = false;
 
         if (action.meta.arg.actionType === "GET") {
-          state.usersData = action.payload;
+          state.usersData = action.payload.reverse();
         }
 
         if (action.meta.arg.actionType === "POST") {
           const [newUser] = action.payload;
-          state.usersData = [...state.usersData, newUser];
+          state.usersData = [newUser, ...state.usersData];
           state.successMessage = "User added successfully";
         }
 

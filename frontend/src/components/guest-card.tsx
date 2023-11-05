@@ -1,16 +1,18 @@
-import { UsersObject, isEditing, isOpened } from "@/store/users-slice";
+import {
+  UsersObject,
+  isDeleting,
+  isEditing,
+  isOpened,
+} from "@/store/users-slice";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CiEdit } from "react-icons/ci";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAppDispatch } from "@/store/hooks";
-import Social from "./social";
 import { Button } from "./ui/button";
 
 interface CardProps {
@@ -49,7 +51,13 @@ const GuestCard = ({ user }: CardProps) => {
             >
               Edit
             </Button>
-            <Button className="px-10 bg-inherit border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white">
+            <Button
+              onClick={() => {
+                dispatch(isDeleting(true));
+                dispatch(isOpened(false));
+              }}
+              className="px-10 bg-inherit border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white"
+            >
               Delete
             </Button>
           </CardContent>

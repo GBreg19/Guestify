@@ -1,6 +1,5 @@
 import {
   UsersObject,
-  isAdding,
   isDeleting,
   isEditing,
   isOpened,
@@ -13,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { CiSquarePlus } from "react-icons/ci";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -62,19 +60,18 @@ const GuestsTable = () => {
       <Table className="">
         <TableHeader className="bg-black">
           <TableRow className="font-Noto-BoldIta">
+            <TableHead className="pr-0">
+              <input
+                type="checkbox"
+                className="w-4 h-4 mr-2 text-blue-600 bg-gray-100 rounded-lg"
+                onClick={() => console.log("clicked")}
+              />
+            </TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>City</TableHead>
             <TableHead className="flex items-center justify-end">
-              <div>
-                <button
-                  onClick={() => dispatch(isAdding(true))}
-                  className="text-3xl text-black hover:text-gray-600 mr-2 "
-                  title="Add new guest"
-                >
-                  <CiSquarePlus />
-                </button>
-              </div>
+              Actions
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -82,6 +79,13 @@ const GuestsTable = () => {
           {displayedUsers.map((user) => {
             return (
               <TableRow key={user._id} className="font-Noto-Reg">
+                <TableCell>
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 mr-2 text-blue-600 bg-gray-100 rounded-lg"
+                    onClick={() => console.log(user._id)}
+                  />
+                </TableCell>
                 <TableCell>
                   <span
                     title={`Click to open ${

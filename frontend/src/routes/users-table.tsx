@@ -8,8 +8,9 @@ import PageBadge from "@/components/page-badge";
 import Container from "@/components/container";
 import GuestsTable from "@/components/guests-table";
 import AlertMessage from "@/components/alert-message";
-import { fetchUsers } from "@/store/users-slice";
+import { fetchUsers, isAdding } from "@/store/users-slice";
 import { FaHouseUser } from "react-icons/fa6";
+import { VscAdd } from "react-icons/vsc";
 
 const UsersTable = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -43,10 +44,21 @@ const UsersTable = () => {
       {error && <ErrorMessage errorMessage={error} />}
       {!loading && !error && (
         <div>
-          <span className="border-[1px] flex w-52 justify-between px-3 py-3 bg-slate-100 mb-5">
-            <FaHouseUser className="text-xl text-indigo-600" />
-            <h1 className="font-Noto-Med">{`Guests invited (${usersData.length})`}</h1>
-          </span>
+          <div className="flex justify-between items-center mb-5">
+            <div className="border-[1px] flex w-52 justify-between px-3 py-3 bg-slate-100">
+              <FaHouseUser className="text-xl text-indigo-600" />
+              <h1 className="font-Noto-Med">{`Guests invited (${usersData.length})`}</h1>
+            </div>
+            <div className="mr-5">
+              <button
+                onClick={() => dispatch(isAdding(true))}
+                className="text-xl p-1 rounded-full bg-indigo-600 text-white"
+                title="Add new guest"
+              >
+                <VscAdd className="" />
+              </button>
+            </div>
+          </div>
           <GuestsTable />
         </div>
       )}
