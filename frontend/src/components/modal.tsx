@@ -6,7 +6,7 @@ import {
   isDeleting,
   isEditing,
   isOpened,
-} from "@/store/users-slice";
+} from "@/store/guests-slice";
 import { Button } from "./ui/button";
 import UserForm from "./guest-form";
 import GuestCard from "./guest-card";

@@ -1,4 +1,9 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  PayloadAction,
+  createAsyncThunk,
+  createSlice,
+  current,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 export interface UsersObject {
@@ -21,6 +26,7 @@ interface UsersState {
   adding: boolean;
   successMessage: string | null;
   errorMessage: string | null;
+  selectedGuests: UsersObject[];
 }
 
 const initialState: UsersState = {
@@ -33,6 +39,7 @@ const initialState: UsersState = {
   adding: false,
   successMessage: "",
   errorMessage: "",
+  selectedGuests: [],
 };
 
 export const fetchUsers = createAsyncThunk<
@@ -108,6 +115,16 @@ export const usersSlice = createSlice({
     setErrorMessage: (state, action: PayloadAction<string | null>) => {
       state.errorMessage = action.payload;
     },
+    selectGuests: (state, action: PayloadAction<string | null>) => {
+      console.log(action.payload)
+    //   if (action.payload) {
+    //     const selectedGuest = state.usersData.find(
+    //       (guest) => guest._id === action.payload
+    //     );
+    //     state.selectedGuests.push(selectedGuest!);
+    //   }
+    //   console.log(current(state.selectedGuests));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -162,6 +179,7 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { isDeleting, isEditing, isAdding, isOpened } = usersSlice.actions;
+export const { isDeleting, isEditing, isAdding, isOpened, selectGuests } =
+  usersSlice.actions;
 
 export default usersSlice.reducer;

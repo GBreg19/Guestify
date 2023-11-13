@@ -3,7 +3,7 @@ import {
   isDeleting,
   isEditing,
   isOpened,
-} from "@/store/users-slice";
+} from "@/store/guests-slice";
 import {
   Card,
   CardContent,

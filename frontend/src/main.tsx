@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./routes/error-page.tsx";
-import UsersTable from "./routes/users-table.tsx";
+import UsersTable from "./routes/guests-table.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/store.ts";
 import Layout from "./layout/layout.tsx";

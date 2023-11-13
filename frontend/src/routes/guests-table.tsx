@@ -8,9 +8,8 @@ import PageBadge from "@/components/page-badge";
 import Container from "@/components/container";
 import GuestsTable from "@/components/guests-table";
 import AlertMessage from "@/components/alert-message";
-import { fetchUsers, isAdding } from "@/store/users-slice";
+import { fetchUsers, isAdding } from "@/store/guests-slice";
 import { FaHouseUser } from "react-icons/fa6";
-import { VscAdd } from "react-icons/vsc";
 
 const UsersTable = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -52,10 +51,10 @@ const UsersTable = () => {
             <div className="mr-5">
               <button
                 onClick={() => dispatch(isAdding(true))}
-                className="text-xl p-1 rounded-full bg-indigo-600 text-white"
+                className="flex items-center font-Noto-Bold gap-3 p-2 rounded-md bg-indigo-700 hover:bg-indigo-600 text-white"
                 title="Add new guest"
               >
-                <VscAdd className="" />
+                Add new
               </button>
             </div>
           </div>

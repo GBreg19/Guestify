@@ -17,7 +17,7 @@ import {
   fetchUsers,
   isAdding,
   isEditing,
-} from "@/store/users-slice";
+} from "@/store/guests-slice";
 import { useAppDispatch } from "@/store/hooks";
 
 interface FormProps {

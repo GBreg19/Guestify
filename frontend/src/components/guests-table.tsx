@@ -3,7 +3,8 @@ import {
   isDeleting,
   isEditing,
   isOpened,
-} from "@/store/users-slice";
+  selectGuests,
+} from "@/store/guests-slice";
 import {
   Table,
   TableBody,
@@ -26,10 +27,13 @@ import {
 import { SlOptions } from "react-icons/sl";
 import Modal from "@/components/modal";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import SelectInput from "./select-input";
 
 const GuestsTable = () => {
   const [selectedUser, setSelectedUser] = useState<UsersObject | null>(null);
+  const [issingleChecked, setIsSingleChecked] = useState(false);
+  const [isAllChecked, setIsAllChecked] = useState(false);
   const { usersData, deleting, editing, adding, isGuestProfileOpened } =
     useAppSelector((state) => state.users);
 
@@ -55,17 +59,23 @@ const GuestsTable = () => {
     }
   };
 
+  const onAllSelect = () => {
+    // setIsAllChecked((current) => !current);
+    setIsSingleChecked((current) => !current);
+  };
+  console.log(isAllChecked)
+
+  const onSingleSelect = (id: string) => {
+    setIsSingleChecked((current) => !current);
+  };
+
   return (
     <>
       <Table className="">
         <TableHeader className="bg-black">
           <TableRow className="font-Noto-BoldIta">
-            <TableHead className="pr-0">
-              <input
-                type="checkbox"
-                className="w-4 h-4 mr-2 text-blue-600 bg-gray-100 rounded-lg"
-                onClick={() => console.log("clicked")}
-              />
+            <TableHead className="pr-0 w-5">
+              <SelectInput value={isAllChecked} onClick={onAllSelect} />
             </TableHead>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
@@ -80,10 +90,9 @@ const GuestsTable = () => {
             return (
               <TableRow key={user._id} className="font-Noto-Reg">
                 <TableCell>
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 mr-2 text-blue-600 bg-gray-100 rounded-lg"
-                    onClick={() => console.log(user._id)}
+                  <SelectInput
+                    value={issingleChecked}
+                    onClick={() => onSingleSelect(user._id!)}
                   />
                 </TableCell>
                 <TableCell>
